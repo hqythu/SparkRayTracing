@@ -2,17 +2,23 @@
   * Created by hqythu on 7/17/16.
   */
 
-import scala.math.{ sqrt, sin, cos, random => rnd, Pi }
+package me.hqythu.sparkraytracing
+
+import scala.math.{Pi, cos, sin, sqrt, random => rnd}
 
 class Vector3(val x: Double, val y: Double, val z: Double) {
 
   def norm: Double = sqrt(x * x + y * y + z * z)
+
+  def norm2: Double = x * x + y * y + z * z
 
   def +(that: Vector3): Vector3 = new Vector3(x + that.x, y + that.y, z + that.z)
 
   def -(that: Vector3): Vector3 = new Vector3(x - that.x, y - that.y, z - that.z)
 
   def *(factor: Double): Vector3 = new Vector3(x * factor, y * factor, z * factor)
+
+  def /(factor: Double): Vector3 = new Vector3(x / factor, y / factor, z / factor)
 
   def ^(that: Vector3): Vector3 = new Vector3(y * that.z - z * that.y, z * that.x - z * that.z, x * that.y - y * that.x)
 
