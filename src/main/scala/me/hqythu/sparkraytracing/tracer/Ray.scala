@@ -19,9 +19,9 @@ class Ray(val start: Vector3, val direction: Vector3) {
     val sin_r = if (inner) sin_i * n else sin_i / n
     val cos_r = math.sqrt(1 - sin_i * sin_i)
     if (inner) {
-      new Ray(position, ((direction + normal * (direction $ normal)) % () * sin_r + normal * cos_r) % ())
+      new Ray(position, ((direction - normal * (direction $ normal)) % () * sin_r + normal * cos_r) % ())
     } else {
-      new Ray(position, ((direction - normal * (direction $ normal)) % () * sin_r - normal * cos_r) % ())
+      new Ray(position, ((direction + normal * (direction $ normal)) % () * sin_r - normal * cos_r) % ())
     }
   }
 

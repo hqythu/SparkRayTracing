@@ -34,11 +34,13 @@ class JsonReader {
       null
     }
     new Material(
-      parseColor(obj.get("color").get.asInstanceOf[List[Double]]),
-      obj.get("diff").get.asInstanceOf[Double],
-      obj.get("refl").get.asInstanceOf[Double],
-      obj.get("refr").get.asInstanceOf[Double],
-      obj.get("index").get.asInstanceOf[Double],
+      parseColor(obj.getOrElse("color", {}).asInstanceOf[List[Double]]),
+      obj.getOrElse("diff", 0.0).asInstanceOf[Double],
+      obj.getOrElse("refl", 0.0).asInstanceOf[Double],
+      obj.getOrElse("refr", 0.0).asInstanceOf[Double],
+      obj.getOrElse("index", 1.0).asInstanceOf[Double],
+      obj.getOrElse("spec", 0.0).asInstanceOf[Double],
+      obj.getOrElse("specn", 0.0).asInstanceOf[Double],
       img
     )
   }

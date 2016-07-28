@@ -13,9 +13,15 @@ class Image(var width: Int = 0, var height: Int = 0) extends Serializable {
   var b = new Array[Short](width * height)
 
   def setColor(x: Int, y: Int, color: Color): Unit = {
-    r(x * height + y) = (color.r * 255).toByte
-    g(x * height + y) = (color.g * 255).toByte
-    b(x * height + y) = (color.b * 255).toByte
+    r(x * height + y) = (color.r * 255).toShort
+    g(x * height + y) = (color.g * 255).toShort
+    b(x * height + y) = (color.b * 255).toShort
+  }
+
+  def setColor(x: Int, y: Int, r: Short, g: Short, b: Short): Unit = {
+    this.r(x * height + y) = r
+    this.g(x * height + y) = g
+    this.b(x * height + y) = b
   }
 
   def getColor(x: Int, y: Int): Color = {

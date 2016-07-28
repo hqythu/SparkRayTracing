@@ -1,0 +1,98 @@
+{
+  "Objects": [
+    {
+      "type": "Sphere",
+      "center": [10.0, 70.0, 20.0],
+      "radius": 20.0,
+      "material": {
+        "color": [1.0, 1.0, 1.0],
+        "diff": 0.5,
+        "refl": 0.5,
+        "spec": 0.8,
+        "specn": 50.0,
+        "texture": "marble.bmp"
+      }
+    },
+    {
+      "type": "Sphere",
+      "center": [10.0, 110.0, 15.0],
+      "radius": 15.0,
+      "material": {
+        "color": [0.4, 0.4, 1.0],
+        "diff": 0.0,
+        "refl": 1.0,
+        "spec": 0.4,
+        "specn": 50.0
+      }
+    },
+    {
+      "type": "Sphere",
+      "center": [60.0, 70.0, 10.0],
+      "radius": 10.0,
+      "material": {
+        "color": [1.0, 0.6, 0.6],
+        "refr": 1.0,
+        "index": 1.5,
+        "spec": 0.4,
+        "specn": 50.0
+      }
+    },
+    {
+      "type": "Sphere",
+      "center": [60.0, 95.0, 10.0],
+      "radius": 10.0,
+      "material": {
+        "color": [0.7, 0.7, 0.7],
+        "refr": 1.0,
+        "index": 1.5,
+        "spec": 0.4,
+        "specn": 50.0
+      }
+    },
+    {
+      "type": "Sphere",
+      "center": [48.0, 40.0, 10.0],
+      "radius": 10.0,
+      "material": {
+        "color": [0.4, 1.0, 0.4],
+        "refr": 1.0,
+        "index": 1.5,
+        "spec": 0.4,
+        "specn": 50.0
+      }
+    },
+    {
+      "type": "Plane",
+      "position": [0.0, 0.0, 0.0],
+      "normal": [0.0, 0.0, 1.0],
+      "dx": [100.0, 0.0, 0.0],
+      "material": {
+        "color": [0.7, 0.7, 0.7],
+        "index": 1.0,
+        "diff": 0.5,
+        "refl": 0.5,
+        "refr": 0.0,
+        "texture": "floor.bmp"
+      }
+    }
+  ],
+  "Lights": [
+    {
+      "color": [0.7, 0.7, 0.7],
+      "position": [50.0, 80.0, 100.0]
+    },
+    {
+      "color": [0.7, 0.7, 0.7],
+      "position": [-50.0, 50.0, 100.0]
+    }
+  ],
+  "BackgroundColor": [0.1, 0.1, 0.1],
+  "width": 1280.0,
+  "height": 800.0,
+  "Camera": {
+    "position": [200.0, 0.0, 100.0],
+    "front": [-2.0, 1.0, -1.0],
+    "up": [-2.0, 1.0, 5.0],
+    "ratio": 1500.0
+  }
+}

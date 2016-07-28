@@ -7,7 +7,7 @@ package me.hqythu.sparkraytracing.tracer
 import java.awt.image.BufferedImage
 
 import me.hqythu.sparkraytracing.objects.Intersects
-import me.hqythu.sparkraytracing.utils.{Color, Vector3}
+import me.hqythu.sparkraytracing.utils.{Color, Image, Vector3}
 import org.apache.spark.{SparkConf, SparkContext}
 
 
@@ -34,20 +34,21 @@ class Tracer(camera: Camera, scene: Scene) extends Serializable {
       val color_bg = scene.backgroundColor * objColor * material.diff
 
       val color_diff = {
-        if (material.diff > 0) {
-          var color = new Color()
-          for (light <- scene.lights) {
-            val toLight = new Ray(inter.position, (light.position - inter.position) % ())
-            val inter_1 = scene.find_nearest_object(toLight)
-            val dot = toLight.direction $ inter.normal
-            if (!inter_1.intersects && dot > 0) {
+        var color = new Color()
+        for (light <- scene.lights) {
+          val toLight = new Ray(inter.position, (light.position - inter.position) % ())
+          val inter_1 = scene.find_nearest_object(toLight)
+          val dot = toLight.direction $ inter.normal
+          if (!inter_1.intersects && dot > 0) {
+            if (material.diff > 0) {
               color = color + light.color * objColor * material.diff * dot
             }
+            if (material.spec > 0) {
+              color = color + light.color * math.pow(dot, material.specn) * material.spec
+            }
           }
-          color
-        } else {
-          new Color()
         }
+        color
       }
 
       val color_refl = if (material.refl > 0) {
@@ -62,54 +63,53 @@ class Tracer(camera: Camera, scene: Scene) extends Serializable {
         new Color()
       }
 
-      (color_bg + color_diff + color_refl + color_refr).confine()
+      (color_bg + color_diff + color_refl + color_refr).confine
     }
   }
 
   def runspark(): BufferedImage = {
     val conf = new SparkConf()
       .setAppName("raytracer")
-      .setMaster("local[8]")
-      .set("spark.executor.heartbeatInterval", "1000000")
+      .setMaster("local[*]")
+      .set("spark.executor.extraJavaOptions", "-verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps")
       .set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
       .set("spark.kryo.registrator", "me.hqythu.sparkraytracing.utils.MyRegisterKryo")
 
     val sc = SparkContext.getOrCreate(conf)
 
+    //    val pointList = sc.parallelize((0 until width * height).map((i: Int) => (i / height, i % height)))
     val pointList = sc.parallelize(0 until width).cartesian(sc.parallelize(0 until height))
 
     val colors = pointList
       .map((p: (Int, Int)) => (p, camera.emit(p._1, p._2)))
+      //      .map(r => (r._1, raytrace(r._2, 0).toRGB))
       .map(r => (r._1, raytrace(r._2, 0)))
       .collect()
 
-    val image: BufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
-
-//    colors.foreach(color => {
-//      val rgb = (color._2.r * 255).toInt * 256 * 256 + (color._2.g * 255).toInt * 256 + (color._2.b * 255).toInt
-//      image.setRGB(color._1._1, height - color._1._2 - 1, rgb.toInt)
-//    })
+    val image = new Image(width, height)
 
     for (color <- colors) {
-      val rgb = (color._2.r * 255).toInt * 256 * 256 + (color._2.g * 255).toInt * 256 + (color._2.b * 255).toInt
-      image.setRGB(color._1._1, height - color._1._2 - 1, rgb.toInt)
+      image.setColor(color._1._1, color._1._2, color._2)
     }
 
-    image
+    //    for (color <- colors) {
+    //      image.setColor(color._1._1, color._1._2, color._2._1, color._2._2, color._2._3)
+    //    }
+
+    image.toBufferedImage
   }
 
   def run(): BufferedImage = {
-    val image: BufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
+    val image = new Image(width, height)
 
     for (i <- 0 until width) {
       for (j <- 0 until height) {
         val color = raytrace(camera.emit(i, j), 0)
-        val rgb = (color.r * 255).toInt * 256 * 256 + (color.g * 255).toInt * 256 + (color.b * 255).toInt
-        image.setRGB(i, height - j - 1, rgb.toInt)
+        image.setColor(i, j, color)
       }
     }
 
-    image
+    image.toBufferedImage
   }
 
 }

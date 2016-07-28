@@ -6,8 +6,11 @@ package me.hqythu.sparkraytracing.tracer
 
 import me.hqythu.sparkraytracing.utils.Vector3
 
-class Camera(position: Vector3, front: Vector3, up: Vector3, val width: Int, val height: Int, ratio: Double)
+class Camera(position: Vector3, _front: Vector3, _up: Vector3, val width: Int, val height: Int, ratio: Double)
   extends Serializable {
+
+  val front = _front % ()
+  val up = _up % ()
 
   val right = (front ^ up) % ()
 

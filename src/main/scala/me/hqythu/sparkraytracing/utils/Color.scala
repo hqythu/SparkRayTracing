@@ -22,6 +22,8 @@ class Color(val r: Double = 0, val g: Double = 0, val b: Double = 0) extends Ser
 
   def /(factor: Double): Color = new Color(r / factor, g / factor, b / factor)
 
-  def confine(): Color = new Color(min(r, 1.0), min(g, 1.0), min(b, 1.0))
+  def confine: Color = new Color(min(r, 1.0), min(g, 1.0), min(b, 1.0))
+
+  def toRGB: (Short, Short, Short) = ((r * 255).toShort, (g * 255).toShort, (b * 255).toShort)
 
 }
