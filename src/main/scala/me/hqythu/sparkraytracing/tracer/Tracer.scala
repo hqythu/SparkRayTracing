@@ -76,7 +76,7 @@ class Tracer(camera: Camera, scene: Scene) extends Serializable {
 
     val sc = SparkContext.getOrCreate(conf)
 
-    val pointList = sc.parallelize((0 until width * height).map((i: Int) => (i / width, i % width)))
+    val pointList = sc.parallelize((0 until width * height).map((i: Int) => (i / height, i % height)))
 
     val colors = pointList
       .map((p: (Int, Int)) => (p, camera.emit(p._1, p._2)))
