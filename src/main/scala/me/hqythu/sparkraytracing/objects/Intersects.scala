@@ -4,10 +4,10 @@
 
 package me.hqythu.sparkraytracing.objects
 
-import me.hqythu.sparkraytracing.Vector3
+import me.hqythu.sparkraytracing.utils.Vector3
 
 class Intersects(_object_ptr: Object, _intersects: Boolean, _distance: Double,
-                 _position: Vector3, _normal: Vector3) {
+                 _position: Vector3, _normal: Vector3) extends Serializable {
   val object_ptr = _object_ptr
   val intersects = _intersects
   val distance = _distance

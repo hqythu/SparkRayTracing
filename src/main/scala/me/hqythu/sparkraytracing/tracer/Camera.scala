@@ -2,9 +2,12 @@
   * Created by hqythu on 7/17/16.
   */
 
-package me.hqythu.sparkraytracing
+package me.hqythu.sparkraytracing.tracer
 
-class Camera(position: Vector3, front: Vector3, up: Vector3, width: Int, height: Int, ratio: Double) {
+import me.hqythu.sparkraytracing.utils.Vector3
+
+class Camera(position: Vector3, front: Vector3, up: Vector3, val width: Int, val height: Int, ratio: Double)
+  extends Serializable {
 
   val right = (front ^ up) % ()
 

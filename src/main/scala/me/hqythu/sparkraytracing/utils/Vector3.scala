@@ -2,11 +2,11 @@
   * Created by hqythu on 7/17/16.
   */
 
-package me.hqythu.sparkraytracing
+package me.hqythu.sparkraytracing.utils
 
 import scala.math.{Pi, cos, sin, sqrt, random => rnd}
 
-class Vector3(val x: Double, val y: Double, val z: Double) {
+class Vector3(val x: Double, val y: Double, val z: Double) extends Serializable {
 
   def norm: Double = sqrt(x * x + y * y + z * z)
 

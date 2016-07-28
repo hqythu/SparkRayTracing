@@ -4,12 +4,15 @@
 
 package me.hqythu.sparkraytracing.objects
 
+import me.hqythu.sparkraytracing.tracer.Ray
+
 import scala.math.sqrt
+import me.hqythu.sparkraytracing.Constants
+import me.hqythu.sparkraytracing.utils.Vector3
 
-import me.hqythu.sparkraytracing.{Ray, Vector3, Constants}
+class Sphere(center: Vector3, radius: Double, material: Material) extends AbstractObject(material) {
 
-class Sphere(center: Vector3, radius: Double) extends AbstractObject {
-  def intersects(ray: Ray): Intersects = {
+  override def intersects(ray: Ray): Intersects = {
     val v = this.center - ray.start
     val DdotV = ray.direction $ v
 
@@ -33,4 +36,5 @@ class Sphere(center: Vector3, radius: Double) extends AbstractObject {
 
     Intersects.noHit
   }
+
 }

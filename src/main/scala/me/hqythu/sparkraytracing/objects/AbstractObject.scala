@@ -4,6 +4,10 @@
 
 package me.hqythu.sparkraytracing.objects
 
-abstract class AbstractObject {
+import me.hqythu.sparkraytracing.tracer.Ray
+
+abstract class AbstractObject(val material: Material) extends Serializable {
+
+  def intersects(ray: Ray): Intersects
 
 }
