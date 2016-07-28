@@ -39,8 +39,8 @@ class JsonReader {
     )
   }
 
-  def parser(fileName: String): (Camera, Scene) = {
-    val json = parse(new File(fileName))
+  def parser(file: File): (Camera, Scene) = {
+    val json = parse(file)
     val objs = new ArrayBuffer[AbstractObject]
     val lights = new ArrayBuffer[Light]
     for (obj <- (json \ "Objects").values.asInstanceOf[List[Map[String, _]]]) {

@@ -14,7 +14,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 object SparkRayTracing {
   def main(args: Array[String]) {
     val jsonReader = new JsonReader
-    val tmp = jsonReader.parser("Scene.json")
+    val tmp = jsonReader.parser(new File("Scene.json"))
     val camera = tmp._1
     val scene = tmp._2
 

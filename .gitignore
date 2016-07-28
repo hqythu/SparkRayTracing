@@ -1,5 +1,7 @@
 .idea/
 out/
+output/
+scenes/
 
 *.class
 *.log
@@ -19,5 +21,5 @@ project/plugins/project/
 .scala_dependencies
 .worksheet
 
-.png
-.bmp
+*.png
+*.bmp

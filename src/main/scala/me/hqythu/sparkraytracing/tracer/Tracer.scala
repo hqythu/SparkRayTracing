@@ -76,7 +76,7 @@ class Tracer(camera: Camera, scene: Scene) extends Serializable {
 
     val sc = SparkContext.getOrCreate(conf)
 
-    val pointList = sc.parallelize((0 until width * height).map((i: Int) => (i / height, i % height)))
+    val pointList = sc.parallelize(0 until width).cartesian(sc.parallelize(0 until height))
 
     val colors = pointList
       .map((p: (Int, Int)) => (p, camera.emit(p._1, p._2)))
@@ -84,6 +84,11 @@ class Tracer(camera: Camera, scene: Scene) extends Serializable {
       .collect()
 
     val image: BufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
+
+//    colors.foreach(color => {
+//      val rgb = (color._2.r * 255).toInt * 256 * 256 + (color._2.g * 255).toInt * 256 + (color._2.b * 255).toInt
+//      image.setRGB(color._1._1, height - color._1._2 - 1, rgb.toInt)
+//    })
 
     for (color <- colors) {
       val rgb = (color._2.r * 255).toInt * 256 * 256 + (color._2.g * 255).toInt * 256 + (color._2.b * 255).toInt
