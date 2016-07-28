@@ -83,4 +83,18 @@ class Tracer(camera: Camera, scene: Scene) extends Serializable {
     image
   }
 
+  def run(): BufferedImage = {
+    val image: BufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
+
+    for (i <- 0 until width) {
+      for (j <- 0 until height) {
+        val color = raytrace(camera.emit(i, j), 0)
+        val rgb = (color.r * 255).toInt * 256 * 256 + (color.g * 255).toInt * 256 + (color.b * 255).toInt
+        image.setRGB(i, height - j - 1, rgb.toInt)
+      }
+    }
+
+    image
+  }
+
 }

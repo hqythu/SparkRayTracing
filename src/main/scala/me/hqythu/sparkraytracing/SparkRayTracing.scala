@@ -17,8 +17,8 @@ object SparkRayTracing {
       .setAppName("raytracer")
       .setMaster("local[8]")
       .set("spark.executor.heartbeatInterval", "1000000")
-//      .set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
-//      .set("spark.kryo.registrator", "me.hqythu.sparkraytracing.utils.MyRegisterKryo")
+      .set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
+      .set("spark.kryo.registrator", "me.hqythu.sparkraytracing.utils.MyRegisterKryo")
 
     val sc = SparkContext.getOrCreate(conf)
 
@@ -29,6 +29,7 @@ object SparkRayTracing {
 
     val tracer = new Tracer(camera, scene)
     val img = tracer.runspark(sc)
+//    val img = tracer.run()
 
     ImageIO.write(img, "png", new File("img.png"))
     System.in.read()

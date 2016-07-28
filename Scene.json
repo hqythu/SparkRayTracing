@@ -20,8 +20,8 @@
       "material": {
         "color": [1.0, 1.0, 0.0],
         "index": 1.0,
-        "diff": 0.0,
-        "refl": 1.0,
+        "diff": 0.2,
+        "refl": 0.8,
         "refr": 0.0
       }
     },
