@@ -26,9 +26,9 @@ class JsonReader {
     new Material(
       parseColor(obj.get("color").get.asInstanceOf[List[Double]]),
       obj.get("index").get.asInstanceOf[Double],
-      obj.get("diffIndex").get.asInstanceOf[Double],
-      obj.get("reflIndex").get.asInstanceOf[Double],
-      obj.get("refrIndex").get.asInstanceOf[Double]
+      obj.get("diff").get.asInstanceOf[Double],
+      obj.get("refl").get.asInstanceOf[Double],
+      obj.get("refr").get.asInstanceOf[Double]
     )
   }
 
@@ -63,10 +63,11 @@ class JsonReader {
       parseVecter3(tmp.get("position").get.asInstanceOf[List[Double]]),
       parseVecter3(tmp.get("front").get.asInstanceOf[List[Double]]),
       parseVecter3(tmp.get("up").get.asInstanceOf[List[Double]]),
-      (json \ "width").values.asInstanceOf[Int],
-      (json \ "height").values.asInstanceOf[Int],
+      (json \ "width").values.asInstanceOf[Double].toInt,
+      (json \ "height").values.asInstanceOf[Double].toInt,
       tmp.get("ratio").get.asInstanceOf[Double]
     )
-    (camera, new Scene(objs.toArray, lights.toArray))
+    val backgroundColor = parseColor((json \ "BackgroundColor").values.asInstanceOf[List[Double]])
+    (camera, new Scene(objs.toArray, lights.toArray, backgroundColor))
   }
 }

@@ -4,13 +4,15 @@
 
 package me.hqythu.sparkraytracing
 
+import java.io.File
+import javax.imageio.ImageIO
+
 import me.hqythu.sparkraytracing.tracer.{Camera, Tracer}
 import me.hqythu.sparkraytracing.utils.JsonReader
 import org.apache.spark.{SparkConf, SparkContext}
 
 object SparkRayTracing {
   def main(args: Array[String]) {
-    val logFile = "/Users/hqythu/dev/tensorpack/examples/DoReFa-Net/README.md" // Should be some file on your system
     val conf = new SparkConf()
       .setAppName("raytracer")
       .setMaster("local[8]")
@@ -25,6 +27,8 @@ object SparkRayTracing {
     val camera = tmp._1
     val scene = tmp._2
     val tracer = new Tracer(camera, scene)
-    tracer.runspark(sc)
+    val img = tracer.runspark(sc)
+    ImageIO.write(img, "png", new File("img.png"))
+    System.in.read()
   }
 }
