@@ -20,7 +20,7 @@ class Vector3(val x: Double, val y: Double, val z: Double) extends Serializable 
 
   def /(factor: Double): Vector3 = new Vector3(x / factor, y / factor, z / factor)
 
-  def ^(that: Vector3): Vector3 = new Vector3(y * that.z - z * that.y, z * that.x - z * that.z, x * that.y - y * that.x)
+  def ^(that: Vector3): Vector3 = new Vector3(y * that.z - z * that.y, z * that.x - x * that.z, x * that.y - y * that.x)
 
   def %(): Vector3 = if (norm == 0) Vector3.zero else new Vector3(x / norm, y / norm, z / norm)
 

@@ -4,7 +4,9 @@
 
 package me.hqythu.sparkraytracing.utils
 
+import java.awt.image.BufferedImage
 import java.io.File
+import javax.imageio.ImageIO
 
 import me.hqythu.sparkraytracing.objects._
 import me.hqythu.sparkraytracing.tracer.{Camera, Scene}
@@ -23,12 +25,18 @@ class JsonReader {
   }
 
   private def parseMaterial(obj: Map[String, _]): Material = {
+    val img = if (obj.get("texture").nonEmpty) {
+      ImageIO.read(new File(obj.get("texture").get.asInstanceOf[String]))
+    } else {
+      null
+    }
     new Material(
       parseColor(obj.get("color").get.asInstanceOf[List[Double]]),
       obj.get("diff").get.asInstanceOf[Double],
       obj.get("refl").get.asInstanceOf[Double],
       obj.get("refr").get.asInstanceOf[Double],
-      obj.get("index").get.asInstanceOf[Double]
+      obj.get("index").get.asInstanceOf[Double],
+      img
     )
   }
 
@@ -47,6 +55,7 @@ class JsonReader {
         objs.append(new Plane(
           parseVecter3(obj.get("position").get.asInstanceOf[List[Double]]),
           parseVecter3(obj.get("normal").get.asInstanceOf[List[Double]]),
+          parseVecter3(obj.get("dx").get.asInstanceOf[List[Double]]),
           parseMaterial(obj.get("material").get.asInstanceOf[Map[String, _]])
         ))
       }
