@@ -25,16 +25,3 @@ class Color(val r: Double = 0, val g: Double = 0, val b: Double = 0) extends Ser
   def confine(): Color = new Color(min(r, 1.0), min(g, 1.0), min(b, 1.0))
 
 }
-
-
-object Color {
-
-  def fromRGB(argb: Int): Color = {
-    val rgb = argb & (256 * 256 * 256 - 1)
-    val r = (rgb / 256 / 256 % 256) / 255.0
-    val g = (rgb / 256 % 256) / 255.0
-    val b = (rgb % 256) / 255.0
-    new Color(r, g, b)
-  }
-
-}

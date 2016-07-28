@@ -26,7 +26,10 @@ class JsonReader {
 
   private def parseMaterial(obj: Map[String, _]): Material = {
     val img = if (obj.get("texture").nonEmpty) {
-      ImageIO.read(new File(obj.get("texture").get.asInstanceOf[String]))
+      val buffImg = ImageIO.read(new File(obj.get("texture").get.asInstanceOf[String]))
+      val img = new Image
+      img.fromBufferedImage(buffImg)
+      img
     } else {
       null
     }
@@ -35,7 +38,8 @@ class JsonReader {
       obj.get("diff").get.asInstanceOf[Double],
       obj.get("refl").get.asInstanceOf[Double],
       obj.get("refr").get.asInstanceOf[Double],
-      obj.get("index").get.asInstanceOf[Double]
+      obj.get("index").get.asInstanceOf[Double],
+      img
     )
   }
 

@@ -21,27 +21,27 @@ class Plane(position: Vector3, normal: Vector3, dx:Vector3, material: Material) 
   }
 
   override def getColor(intersect: Intersects): Color = {
-//    if (material.texture != null) {
-//      val dy = dx ^ intersect.normal
-//      val u = (dx $ intersect.position) / dx.norm2
-//      val v = (dy $ intersect.position) / dy.norm2
-//      val x = if (u - u.toInt < 0) {
-//        u - u.toInt + 1
-//      } else {
-//        u - u.toInt
-//      }
-//      val y = if (v - v.toInt < 0) {
-//        v - v.toInt + 1
-//      } else {
-//        v - v.toInt
-//      }
-//      val rgb = material.texture.getRGB((x * material.texture.getWidth()).toInt,
-//        (y * material.texture.getHeight()).toInt) & (256 * 256 * 256 - 1)
-//      Color.fromRGB(rgb)
-//    } else {
-//      material.color
-//    }
-    material.color
+    if (material.texture != null) {
+      val dy = dx ^ intersect.normal
+      val u = (dx $ intersect.position) / dx.norm2
+      val v = (dy $ intersect.position) / dy.norm2
+      val x = if (u - u.toInt < 0) {
+        u - u.toInt + 1
+      } else {
+        u - u.toInt
+      }
+      val y = if (v - v.toInt < 0) {
+        v - v.toInt + 1
+      } else {
+        v - v.toInt
+      }
+      val width = material.texture.width
+      val height = material.texture.height
+      val color = material.texture.getColor((x * width).toInt, (y * height).toInt)
+      color
+    } else {
+      material.color
+    }
   }
 
 }

@@ -9,7 +9,8 @@
         "index": 1.0,
         "diff": 1.0,
         "refl": 0.0,
-        "refr": 0.0
+        "refr": 0.0,
+        "texture": "marble.bmp"
       }
     },
     {
@@ -46,7 +47,8 @@
         "index": 1.0,
         "diff": 0.7,
         "refl": 0.3,
-        "refr": 0.0
+        "refr": 0.0,
+        "texture": "texture.png"
       }
     }
   ],
