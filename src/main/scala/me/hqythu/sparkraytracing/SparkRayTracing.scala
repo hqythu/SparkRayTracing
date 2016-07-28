@@ -19,8 +19,8 @@ object SparkRayTracing {
     val scene = tmp._2
 
     val tracer = new Tracer(camera, scene)
-//    val img = tracer.runspark()
-    val img = tracer.run()
+    val img = tracer.runspark()
+//    val img = tracer.run()
 
     ImageIO.write(img, "png", new File("img.png"))
 //    System.in.read()

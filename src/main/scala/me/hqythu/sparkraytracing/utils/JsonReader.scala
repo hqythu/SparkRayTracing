@@ -35,8 +35,7 @@ class JsonReader {
       obj.get("diff").get.asInstanceOf[Double],
       obj.get("refl").get.asInstanceOf[Double],
       obj.get("refr").get.asInstanceOf[Double],
-      obj.get("index").get.asInstanceOf[Double],
-      img
+      obj.get("index").get.asInstanceOf[Double]
     )
   }
 
