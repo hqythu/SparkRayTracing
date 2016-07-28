@@ -32,6 +32,23 @@ class Tracer(camera: Camera, scene: Scene) extends Serializable {
 
       val color_bg = scene.backgroundColor * material.color * material.diff
 
+      val color_diff = {
+        if (material.diff > 0) {
+          var color = new Color()
+          for (light <- scene.lights) {
+            val toLight = new Ray(inter.position, (light.position - inter.position) % ())
+            val inter_1 = scene.find_nearest_object(toLight)
+            val dot = toLight.direction $ inter.normal
+            if (!inter_1.intersects && dot > 0) {
+              color = color + light.color * material.color * material.diff * dot
+            }
+          }
+          color
+        } else {
+          new Color()
+        }
+      }
+
       val color_refl = if (material.refl > 0) {
         raytrace(ray.reflect(inter.normal, inter.position), depth + 1) * material.color * material.refl
       } else {
@@ -44,7 +61,7 @@ class Tracer(camera: Camera, scene: Scene) extends Serializable {
         new Color()
       }
 
-      (color_bg + color_refl + color_refr).confine()
+      (color_bg + color_diff + color_refl + color_refr).confine()
     }
   }
 
@@ -59,8 +76,8 @@ class Tracer(camera: Camera, scene: Scene) extends Serializable {
     val image: BufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
 
     for (color <- colors) {
-      val rgb = (color._2.r * 256).toInt * 256 * 256 + (color._2.g * 256).toInt * 256 + (color._2.b * 256).toInt
-      image.setRGB(color._1._1, color._1._2, rgb.toInt)
+      val rgb = (color._2.r * 255).toInt * 256 * 256 + (color._2.g * 255).toInt * 256 + (color._2.b * 255).toInt
+      image.setRGB(color._1._1, height - color._1._2 - 1, rgb.toInt)
     }
 
     image

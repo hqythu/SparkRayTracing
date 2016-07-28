@@ -26,8 +26,10 @@ object SparkRayTracing {
     val tmp = jsonReader.parser("Scene.json")
     val camera = tmp._1
     val scene = tmp._2
+
     val tracer = new Tracer(camera, scene)
     val img = tracer.runspark(sc)
+
     ImageIO.write(img, "png", new File("img.png"))
     System.in.read()
   }

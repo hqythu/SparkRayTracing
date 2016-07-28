@@ -25,10 +25,10 @@ class JsonReader {
   private def parseMaterial(obj: Map[String, _]): Material = {
     new Material(
       parseColor(obj.get("color").get.asInstanceOf[List[Double]]),
-      obj.get("index").get.asInstanceOf[Double],
       obj.get("diff").get.asInstanceOf[Double],
       obj.get("refl").get.asInstanceOf[Double],
-      obj.get("refr").get.asInstanceOf[Double]
+      obj.get("refr").get.asInstanceOf[Double],
+      obj.get("index").get.asInstanceOf[Double]
     )
   }
 
