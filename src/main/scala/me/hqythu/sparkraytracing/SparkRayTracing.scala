@@ -14,13 +14,13 @@ import org.apache.spark.{SparkConf, SparkContext}
 object SparkRayTracing {
   def main(args: Array[String]) {
     val jsonReader = new JsonReader
-    val tmp = jsonReader.parser(new File("spheres.json"))
+    val tmp = jsonReader.parser(new File("refract.json"))
     val camera = tmp._1
     val scene = tmp._2
 
     val tracer = new Tracer(camera, scene)
-//    val img = tracer.runspark()
-    val img = tracer.run()
+    val img = tracer.runspark()
+//    val img = tracer.run()
 
     ImageIO.write(img, "png", new File("img.png"))
 //    System.in.read()

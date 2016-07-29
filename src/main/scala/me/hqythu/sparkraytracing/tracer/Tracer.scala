@@ -71,13 +71,12 @@ class Tracer(camera: Camera, scene: Scene) extends Serializable {
     val conf = new SparkConf()
       .setAppName("raytracer")
       .setMaster("local[*]")
-      .set("spark.executor.extraJavaOptions", "-verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps")
       .set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
       .set("spark.kryo.registrator", "me.hqythu.sparkraytracing.utils.MyRegisterKryo")
 
     val sc = SparkContext.getOrCreate(conf)
 
-    //    val pointList = sc.parallelize((0 until width * height).map((i: Int) => (i / height, i % height)))
+//    val pointList = sc.parallelize((0 until width * height).map((i: Int) => (i / height, i % height)))
     val pointList = sc.parallelize(0 until width).cartesian(sc.parallelize(0 until height))
 
     val colors = pointList
@@ -102,12 +101,18 @@ class Tracer(camera: Camera, scene: Scene) extends Serializable {
   def run(): BufferedImage = {
     val image = new Image(width, height)
 
+    val start = System.currentTimeMillis()
+
     for (i <- 0 until width) {
       for (j <- 0 until height) {
         val color = raytrace(camera.emit(i, j), 0)
         image.setColor(i, j, color)
       }
     }
+
+    val end = System.currentTimeMillis()
+
+    System.out.println((end - start) / 1000.0)
 
     image.toBufferedImage
   }

@@ -1,0 +1,46 @@
+{
+  "Objects": [
+    {
+      "type": "Sphere",
+      "center": [0.0, 100.0, 50.0],
+      "radius": 20.0,
+      "material": {
+        "color": [1.0, 1.0, 1.0],
+        "refl": 0.0,
+        "refr": 1.0,
+        "spec": 0.5,
+        "specn": 50.0,
+        "index": 1.5
+      }
+    },
+    {
+      "type": "Plane",
+      "position": [0.0, 0.0, 0.0],
+      "normal": [0.0, 0.0, 1.0],
+      "dx": [100.0, 0.0, 0.0],
+      "material": {
+        "color": [0.7, 0.7, 0.7],
+        "index": 1.0,
+        "diff": 0.7,
+        "refl": 0.5,
+        "refr": 0.0,
+        "texture": "texture.png"
+      }
+    }
+  ],
+  "Lights": [
+    {
+      "color": [1.0, 1.0, 1.0],
+      "position": [50.0, 0.0, 100.0]
+    }
+  ],
+  "BackgroundColor": [0.1, 0.1, 0.1],
+  "width": 1280.0,
+  "height": 800.0,
+  "Camera": {
+    "position": [0.0, 0.0, 50.0],
+    "front": [0.0, 1.0, 0.0],
+    "up": [0.0, 0.0, 1.0],
+    "ratio": 500.0
+  }
+}
